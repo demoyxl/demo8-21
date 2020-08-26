@@ -9,7 +9,7 @@
 			<el-form ref="loginFormRef" :model="loginform" :rules="loginformRules" class="login_form">
 				<!-- 用户名 -->
 				<el-form-item prop="username">
-					<el-input prefix-icon="iconfont icon-touxiang" v-model="loginform.username"></el-input>
+					<el-input prefix-icon="iconfont icon-touxiang1" v-model="loginform.username"></el-input>
 				</el-form-item>
 				<!-- 密码 -->
 				<el-form-item prop="password">
@@ -80,7 +80,7 @@
 					const {data: res} = await this.$http.post('login', this.loginform);
 					if (res.meta.status !== 200) return this.$message.error("登录失败！");
 					this.$message.success("登录成功！");
-					console.log(res);
+					/* console.log(res); */
 					window.sessionStorage.setItem('token', res.data.token);
 					this.$router.push('/home')
 				});

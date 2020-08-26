@@ -6,11 +6,11 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "147045",
+      "icon_id": "8178769",
       "name": "头像",
       "font_class": "touxiang",
-      "unicode": "e60c",
-      "unicode_decimal": 58892
+      "unicode": "e60d",
+      "unicode_decimal": 58893
     },
     {
       "icon_id": "8191094",
@@ -18,6 +18,55 @@
       "font_class": "mima",
       "unicode": "e7ab",
       "unicode_decimal": 59307
+    },
+    {
+      "icon_id": "8451668",
+      "name": "shangpin",
+      "font_class": "shangpin",
+      "unicode": "e6b1",
+      "unicode_decimal": 59057
+    },
+    {
+      "icon_id": "8776784",
+      "name": "order",
+      "font_class": "icon-test",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "9182686",
+      "name": "头像",
+      "font_class": "touxiang1",
+      "unicode": "e749",
+      "unicode_decimal": 59209
+    },
+    {
+      "icon_id": "10177431",
+      "name": "报表",
+      "font_class": "baobiao",
+      "unicode": "e7c3",
+      "unicode_decimal": 59331
+    },
+    {
+      "icon_id": "10185500",
+      "name": "icon -user-default",
+      "font_class": "icon-user-default",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "10283405",
+      "name": "空间资源",
+      "font_class": "icon_-",
+      "unicode": "e7b1",
+      "unicode_decimal": 59313
+    },
+    {
+      "icon_id": "11695614",
+      "name": "眼",
+      "font_class": "yan",
+      "unicode": "e6a0",
+      "unicode_decimal": 59040
     }
   ]
 }
