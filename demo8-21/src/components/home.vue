@@ -15,8 +15,11 @@
 				<!-- 收起展开按钮 -->
 				<div class="togger_button" @click="toggleCollapest">|||</div>
 				<!-- 自定义菜单栏 侧边栏菜单区 -->
-				<el-menu background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="iscollapse"
-				 :collapse-transition="false">
+				<el-menu background-color="#333744" text-color="#fff" active-text-color="#409EFF"
+				 unique-opened :collapse="iscollapse"
+				 :collapse-transition="false"
+				 router
+				 :default-active="activePath">
 					<!--一级菜单-->
 					<el-submenu :index="item.id+''" v-for="item in menulist" :key="item.id">
 						<!-- 一级菜单的模板区域 -->
@@ -26,7 +29,8 @@
 							<!-- 文本 -->
 							<span>{{item.authName}}</span>
 						</template>
-						<el-menu-item :index="subItem.id+''" v-for="subItem in item.children" :key="subItem.id">
+						<el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id"
+						@click="saveNavState('/'+subItem.path)">
 							<template slot="title">
 								<!-- 图标 -->
 								<i class="el-icon-menu"></i>
@@ -59,11 +63,15 @@
 					'102': 'iconfont icon-icon-test',
 					'145': 'iconfont icon-baobiao'
 				},
-				iscollapse: false
+				//点击展开或收缩
+				iscollapse: false,
+				//点击当前激活菜单的 index
+				activePath:''
 			}
 		},
 		created() {
 			this.getMenuList()
+			this.activePath=window.sessionStorage.getItem('activePath')
 		},
 		methods: {
 			logout() {
@@ -79,12 +87,18 @@
 
 				if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
 				this.menulist = res.data
-				/* console.log(this.menulist) */
+				/* console.log(res.data) */
 			},
 			//点击收起展开左边菜单栏
 			toggleCollapest() {
 				this.iscollapse = !this.iscollapse
+			},
+			//保存链接的激活状态
+			saveNavState(activePath){
+				window.sessionStorage.setItem("activePath",activePath)
+				this.activePath=activePath
 			}
+			
 		}
 	}
 </script>
