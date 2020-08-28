@@ -43,7 +43,6 @@
 				const {data:res} = await this.$http.get('rights/list')
 				if(res.meta.status != 200){return this.$message.error('获取列表权限数据失败')}
 				this.rightsList=res.data
-				console.log(this.rightsList)
 			}
 		}
 	}
