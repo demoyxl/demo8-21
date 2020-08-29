@@ -38,7 +38,7 @@
 						<el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
 						<!-- 分配按钮 -->
 						<el-tooltip effect="dark" content="分配角色" placement="top-start" :enterable="false">
-							<el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+							<el-button type="warning" icon="el-icon-setting" size="mini" @click="userRoles(scope.row)"></el-button>
 						</el-tooltip>
 					</template>
 				</el-table-column>
@@ -91,6 +91,29 @@
 				<el-button @click="editDialogVisible = false">取 消</el-button>
 				<el-button type="primary" @click="editUserInfo">确 定</el-button>
 			</span>
+		</el-dialog>
+		<!-- 分配角色按钮弹框 -->
+		<el-dialog
+		  title="分配角色"
+		  :visible.sync="rolesDialogVisible"
+		  width="50%"
+		  @close="selectClose">
+		<p>当前用户：{{info.username}}</p>
+		<p>当前角色：{{info.role_name}}</p>
+		<p>分配新新角色：
+			 <el-select v-model="SelectRolesid" placeholder='请选择'>
+			    <el-option
+			      v-for="item in RolesList"
+			      :key="item.id"
+			      :label="item.roleName"
+			      :value="item.id">
+			    </el-option>
+			  </el-select>
+		</p>
+		  <span slot="footer" class="dialog-footer">
+		    <el-button @click="rolesDialogVisibleCanel">取 消</el-button>
+		    <el-button type="primary" @click="rolesDialogVisibleOk">确 定</el-button>
+		  </span>
 		</el-dialog>
 	</div>
 </template>
@@ -209,8 +232,16 @@
 							validator: checkMobile,
 							trigger: 'blur'
 						}
-					]
-				}
+					]	
+				},
+				//控制分配权限的隐藏和显示
+				rolesDialogVisible:false,
+				//保存本行内容，用来显示用户名称和职位描述
+				info:[],
+				//获取到的分配列表
+				RolesList:[],
+				//选中的角色id
+				SelectRolesid:''
 			}
 		},
 		mounted() {
@@ -318,10 +349,38 @@
 				if(res.meta.status!=200){return this.$message.error('删除失败')}
 				this.$message.success(res.meta.msg)
 				this.getUserList()
+			},
+			//控制分配角色按钮
+			async userRoles(arr){
+				this.info=arr
+				const {data:res} = await this.$http.get('roles')
+				if(res.meta.status !== 200){return this.$message.error('获取分配列表失败')}
+				this.RolesList=res.data
+				this.rolesDialogVisible=true
+			},
+			//点击Dialog取消按钮
+			rolesDialogVisibleCanel(){
+				this.$message.info('你取消了本次操作！')
+				this.rolesDialogVisible=false
+			},
+			//点击Dialog确认按钮
+			async rolesDialogVisibleOk(){
+				if(!this.SelectRolesid){
+					return this.$message.error('请选择角色！')
+				}
+				const {data:res} = await this.$http.put(`users/${this.info.id}/role`,{rid:this.SelectRolesid})
+				if(res.meta.status !== 200){return this.$message.error('更新数据失败！')}
+				this.$message.success('更新成功！')
+				this.getUserList()
+				this.rolesDialogVisible=false
+			},
+			//Dialog回调函数，重置select下拉
+			selectClose(){
+				this.SelectRolesid=''
+				this.info=[]
 			}
 		}
 	}
 </script>
-
 <style>
 </style>
